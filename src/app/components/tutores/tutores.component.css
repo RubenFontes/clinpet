@@ -1,0 +1,67 @@
+
+main {
+    display: flex;
+    height: calc(100vh - 65px);
+}
+
+main h1{
+    color: var(--color-primary);
+    font-family: 'Poppins';
+    font-weight: 500;
+}
+
+.left {
+    width: 60%;
+    overflow-y: auto;
+    background-color: #e6e8ea;
+}
+
+.form-container {
+    padding: 40px 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.form-container button {
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.right {
+    width: 40%;
+    background-image: url('../../../assets/imgs/tutor.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: sticky;
+    top: 0;
+}
+
+.listagem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 50px;
+}
+
+mat-card{
+    margin-bottom: 10px;
+}
+
+.tutor-card {
+    padding: 10px;
+}
+
+.tutor-card mat-card-title {
+    padding: 10px;
+}
+
+@media (max-width: 900px) {
+    .right {
+        display: none;
+    }
+
+    .left {
+        width: 100%;
+    }
+}
