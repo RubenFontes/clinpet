@@ -1,14 +1,49 @@
-<mat-toolbar color="primary">
-    <section id="brand">
-        <img src="../../../assets/imgs/dog-nose.png" alt="logo-clinpet" width="40" height="40">
+<mat-sidenav-container class="sidenav-container">
+
+  <!-- MENU MOBILE -->
+  <mat-sidenav #drawer mode="over" class="sidenav" position="end">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/tutores" (click)="drawer.close()">Tutores</a>
+      <a mat-list-item routerLink="/pets" (click)="drawer.close()">Pets</a>
+      <a mat-list-item routerLink="/agendamento" (click)="drawer.close()">
+        Agende um serviço
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <mat-sidenav-content>
+
+    <mat-toolbar color="primary">
+
+    <!-- LOGO -->
+      <section id="brand">
+        <img alt="" src="../../../assets/imgs/dog-nose.png" width="40" height="40">
         <a routerLink="/">ClinPet</a>
-    </section>
-    <nav>
-        <ul>
-            <li><a routerLink="/tutores" routerLinkActive="active" ariaCurrentWhenActive="page">Tutores</a></li>
-            <li><a routerLink="/pets" routerLinkActive="active" ariaCurrentWhenActive="page">Pets</a></li>
-            <!-- <li><a routerLink="/atendimento" routerLinkActive="active" ariaCurrentWhenActive="page">Atendimento</a></li> -->
-            <li><a routerLink="/agendamento" routerLinkActive="active" ariaCurrentWhenActive="page">Agendamentos</a></li>
-        </ul>
-    </nav>
-</mat-toolbar>
+      </section>
+
+      <span class="spacer"></span>
+
+      <!-- BOTÃO HAMBURGUER (só no mobile) -->
+      <button
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isMobile">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <!-- MENU DESKTOP -->
+      <nav *ngIf="!isMobile">
+        <a mat-button routerLink="/tutores">Tutores</a>
+        <a mat-button routerLink="/pets">Pets</a>
+        <a mat-raised-button color="accent" routerLink="/agendamento">
+          Agende um serviço
+        </a>
+      </nav>
+
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

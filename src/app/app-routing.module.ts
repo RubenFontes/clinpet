@@ -10,6 +10,7 @@ import { TutoresComponent } from './components/tutores/tutores.component';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'atendimento', component: AtendimentoComponent},
+  {path: 'atendimento/:id', component: AtendimentoComponent},
   {path: 'agendamento', component: AgendamentoComponent},
   {path: 'pets', component: PetsComponent},
   {path: 'tutores', component: TutoresComponent}

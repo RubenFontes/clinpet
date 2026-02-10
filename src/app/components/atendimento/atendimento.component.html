@@ -1,1 +1,54 @@
-<p>atendimento works!</p>
+<section class="content-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{ atendimentoEmEdicao ? 'Editar Atendimento' : 'Novo Atendimento' }}</mat-card-title>
+            <mat-card-subtitle *ngIf="idAgendamento">
+                Agendamento: {{ idAgendamento }}
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="formAtendimento" (ngSubmit)="salvarAtendimento()">
+                
+                <div class="form-row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Peso (kg)</mat-label>
+                        <input matInput type="number" formControlName="peso" placeholder="0.00">
+                        <mat-error *ngIf="formAtendimento.get('peso')?.hasError('required')">
+                            O peso é obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Temperatura (°C)</mat-label>
+                        <input matInput type="number" formControlName="temperatura" placeholder="0.0">
+                        <mat-error *ngIf="formAtendimento.get('temperatura')?.hasError('required')">
+                            A temperatura é obrigatória
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Data de Retorno</mat-label>
+                        <input placeholder="Data" matInput type="date" formControlName="retornoData">
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Anotações Clínicas</mat-label>
+                    <textarea matInput formControlName="anotacoes" rows="5" placeholder="Descreva o quadro clínico, sintomas e observações..."></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Prescrição</mat-label>
+                    <textarea matInput formControlName="prescricao" rows="5" placeholder="Medicamentos receitados e orientações ao tutor..."></textarea>
+                </mat-form-field>
+
+                <div class="actions">
+                    <button mat-stroked-button type="button" routerLink="/agendamento">Voltar</button>
+                    <button mat-flat-button color="warn" type="button" *ngIf="atendimentoEmEdicao" (click)="deletarAtendimento()">Excluir</button>
+                    <button mat-flat-button color="primary" type="submit" [disabled]="formAtendimento.invalid">Salvar</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</section>

@@ -1,27 +1,53 @@
-# ClinicaVeterinaria
+# Clinica Veterinaria (ClinPet)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+Sistema de gestão para clínica veterinária desenvolvido em Angular.
 
-## Development server
+## Descrição
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+O **ClinPet** é uma aplicação Single Page Application (SPA) construída com Angular 15 e Angular Material. O projeto corresponde a um desafio técnico, e oferece funcionalidades para:
 
-## Code scaffolding
+- **Gestão de Tutores:** Cadastro e listagem de proprietários.
+- **Gestão de Pets:** Cadastro de animais vinculados aos tutores.
+- **Agendamentos:** Marcação de consultas com data, hora e status.
+- **Atendimentos:** Registro clínico detalhado (peso, temperatura, prescrição, anotações) vinculado a um agendamento.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Extras:** Pipes e Responsividade.
 
-## Build
+## Instalação
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Para executar este projeto localmente, você precisará do Node.js e do Angular CLI instalados.
 
-## Running unit tests
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/clinica-veterinaria.git
+   ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+2. Entre no diretório do projeto:
+   ```bash
+   cd clinica-veterinaria
+   ```
 
-## Running end-to-end tests
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Como Usar
 
-## Further help
+1. Inicie o servidor de desenvolvimento:
+   ```bash
+   ng serve
+   ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2. Acesse a aplicação no navegador:
+   Abra `http://localhost:4200/`.
+
+3. Navegue pelo menu para acessar as funcionalidades de cadastro de tutores, pets e agendamentos.
+
+## Contribuição
+
+Envie pull requests para melhorias e correções de bugs.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT.

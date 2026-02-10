@@ -8,7 +8,8 @@
 
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Nome</mat-label>
-                <input matInput formControlName="nome" placeholder="Nome">
+                <input matInput formControlName="nome" placeholder="Nome" minlength="3">
+                <mat-error *ngIf="formTutor.get('nome')?.invalid">Insira um nome válido (mínimo 3 caracteres)</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
@@ -31,23 +32,16 @@
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>CPF</mat-label>
                 <input placeholder="CPF" matInput formControlName="cpf" mask="000.000.000-00">
-                <mat-error *ngIf="formTutor.get('cpf')?.invalid">CPF inválido</mat-error>
             </mat-form-field>
 
             <button mat-flat-button color="primary" type="submit" [disabled]="!formTutor.valid">{{ tutorEmEdicao ? 'Atualizar Tutor' : 'Cadastrar Tutor' }}</button>
             <button mat-stroked-button type="button" *ngIf="tutorEmEdicao" (click)="cancelarEdicao()">Cancelar</button>
-            <button mat-flat-button color="accent" type="button" (click)="listaTutores()">{{ mostrarListagem ? 'Ocultar Tutores' : 'Visualizar Tutores Cadastrados' }}</button>
         </form>
 
         <!-- Lista de tutores -->
-        <section class="listagem" *ngIf="mostrarListagem">
+        <section class="listagem" *ngIf="mostrarListagem && tutores.length > 0">
             <h2>Tutores Cadastrados</h2>
-            <form action="">
-                <mat-form-field>
-                    <input matInput type="text" placeholder="Buscar Tutor" (input)="buscaTutores()" [formControl]="formBuscaTutor">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
-            </form>
+            <app-search placeholder="Buscar por nome" (onSearch)="buscaTutores($event)"></app-search>
             <section class="cards" *ngIf="tutoresFiltrados.length > 0">
                 <mat-card class="tutor-card" *ngFor="let tutor of tutoresFiltrados">
                 

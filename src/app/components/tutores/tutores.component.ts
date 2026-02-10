@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { TutorService } from '../../services/tutor.service';
 import { ITutor } from 'src/app/models/Tutor';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-tutores',
@@ -11,24 +12,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./tutores.component.css']
 })
 
-export class TutoresComponent {
+export class TutoresComponent implements OnInit {
 
+  ngOnInit(): void {
+    this.listaTutores();
+    this.buscaTutores('');
+  }
+  
   tutores: ITutor[] = [];
   tutoresFiltrados: ITutor[] = [];
-  mostrarListagem = false;
+  mostrarListagem = true;
   tutorEmEdicao: ITutor | null = null;
+  query: string = '';
 
   constructor (private tutorService: TutorService, private snackBar: MatSnackBar){}
 
   formTutor: FormGroup = new FormGroup({
     nome: new FormControl('', Validators.required),
-    telefone: new FormControl,
+    telefone: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     endereco: new FormControl(''),
     cpf: new FormControl('', Validators.required)
   });
-
-  formBuscaTutor = new FormControl('')
 
   // CRUD
   salvaTutor() {
@@ -38,35 +43,29 @@ export class TutoresComponent {
       this.snackBar.open('Tutor atualizado com sucesso!', 'Fechar')
       this.cancelarEdicao();
     } 
-
-    this.tutorService.createTutor(this.formTutor.value);
-    this.snackBar.open('Tutor atualizado com sucesso!', 'Fechar')
-    this.formTutor.reset();
+    else {
+      this.tutorService.createTutor(this.formTutor.value);
+      this.snackBar.open('Tutor criado com sucesso!', 'Fechar')
+      this.formTutor.reset();
+      this.listaTutores();
+    }
   }
 
   listaTutores() {
       this.tutores = this.tutorService.getTutors();
-      this.handleShowCard()
   }
 
   deletarTutor(id?: string) {
       id && this.tutorService.deleteTutor(id);
       this.tutores = this.tutorService.getTutors();
 
-      this.tutoresFiltrados = this.formBuscaTutor.value ? this.tutorService.readTutor(this.formBuscaTutor.value) : this.tutores;
+      this.tutoresFiltrados = this.query ? this.tutorService.readTutor(this.query) : this.tutores;
   }
 
   // UTILS
-  buscaTutores() {
-    this.tutoresFiltrados = this.tutorService.readTutor(this.formBuscaTutor.value)    
-  }
-
-  handleShowCard() {
-   this.mostrarListagem = !this.mostrarListagem;
-
-    if (this.mostrarListagem) {
-      this.tutoresFiltrados = this.tutores;
-    }
+  buscaTutores(query: string) {
+    this.query = query;
+    this.tutoresFiltrados = this.tutorService.readTutor(this.query);
   }
 
   prepararEdicao(tutor: ITutor) {
@@ -78,6 +77,7 @@ export class TutoresComponent {
   cancelarEdicao() {
     this.tutorEmEdicao = null;
     this.formTutor.reset();
+    this.mostrarListagem = true;
   }
 
 }

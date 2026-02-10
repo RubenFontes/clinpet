@@ -1,1 +1,78 @@
-<p>agendamento works!</p>
+<main>
+    <section class="left">
+        <form [formGroup]="formAgendamento" class="form-container" (ngSubmit)="salvarAgendamento()">
+            
+            <h1>{{ agendamentoEmEdicao ? 'Editar Agendamento' : 'Novo Agendamento' }}</h1>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Pet</mat-label>
+                <mat-select formControlName="petId">
+                    <mat-option *ngFor="let pet of pets" [value]="pet.id">
+                        {{ pet.nome }} (Tutor: {{ getInfoTutor(pet.id) }})
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formAgendamento.get('petId')?.invalid">Selecione um pet</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="tipo">
+                    <mat-option value="Consulta">Consulta</mat-option>
+                    <mat-option value="Vacina">Vacina</mat-option>
+                    <mat-option value="Cirurgia">Cirurgia</mat-option>
+                    <mat-option value="Exame">Exame</mat-option>
+                    <mat-option value="Banho e Tosa">Banho e Tosa</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formAgendamento.get('tipo')?.invalid">Tipo é obrigatório</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Hora</mat-label>
+                <input placeholder="Hora" matInput formControlName="hora" type="time">
+                <mat-error *ngIf="formAgendamento.get('hora')?.invalid">Hora é obrigatória</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option value="Criado">Agendado</mat-option>
+                    <mat-option value="Em andamento">Confirmado</mat-option>
+                    <mat-option value="Finalizado">Concluído</mat-option>
+                    <mat-option value="Cancelado">Cancelado</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formAgendamento.get('status')?.invalid">Selecione um tipo</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Observações</mat-label>
+                <textarea title="''" matInput formControlName="obs" rows="3"></textarea>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="!formAgendamento.valid">{{ agendamentoEmEdicao ? 'Salvar Alterações' : 'Agendar' }}</button>
+            <button mat-stroked-button type="button" *ngIf="agendamentoEmEdicao" (click)="cancelarEdicao()">Cancelar</button>
+        </form>
+
+        <section class="listagem" *ngIf="mostrarListagem && agendamentos.length > 0">
+            <h2>Agendamentos Marcados</h2>
+                        <app-search placeholder="Buscar por Pet ou Tutor" (onSearch)="buscarAgendamentos($event)"></app-search>
+
+            <mat-card class="agendamento-card" *ngFor="let item of agendamentosFiltrados">
+                <mat-card-title>{{ item.tipo }} - às {{ item.hora }}</mat-card-title>
+                <mat-card-subtitle>
+                    Pet: {{ getNomePet(item.petId) }} <br>
+                    Tutor: {{ getInfoTutor(item.petId) }}
+                </mat-card-subtitle>
+                <mat-card-actions>
+                    <section class="start">
+                        <button mat-flat-button color="primary" [routerLink]="['/atendimento', item.id]"><mat-icon>assignment_turned_in</mat-icon>Atendimento</button>
+                    </section>
+                    <section class="end">
+                        <button mat-icon-button color="primary" (click)="prepararEdicao(item)"><mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button color="warn" (click)="deletarAgendamento(item.id)"><mat-icon>delete</mat-icon></button>
+                    </section>
+                </mat-card-actions>
+            </mat-card>
+        </section>
+    </section>
+    <section class="right"></section>
+</main>

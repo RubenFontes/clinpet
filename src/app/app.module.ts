@@ -12,16 +12,21 @@ import { PetsComponent } from './components/pets/pets.component';
 import { AtendimentoComponent } from './components/atendimento/atendimento.component';
 import { AgendamentoComponent } from './components/agendamento/agendamento.component';
 import { TutoresComponent } from './components/tutores/tutores.component';
+import { SearchComponent } from './components/search/search.component';
 
 // Material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule, MatFabAnchor } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
+
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +35,6 @@ import { MatInputModule } from '@angular/material/input';
 
 // Mask
 import { NgxMaskModule } from 'ngx-mask';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     PetsComponent,
     AtendimentoComponent,
     AgendamentoComponent,
-    HomeComponent
+    HomeComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +63,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatSnackBarModule,
     NgxMaskModule.forRoot(),
+    MatOptionModule,
+    MatSelectModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

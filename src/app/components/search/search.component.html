@@ -1,0 +1,5 @@
+<mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ placeholder }}</mat-label>
+    <input placeholder="Busca por nome" matInput (input)="search($event)" [placeholder]="placeholder">
+    <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>

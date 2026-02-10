@@ -1,14 +1,78 @@
-/* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
+
 :root {
-    --color-primary: steelblue;
-    --color-support: #8FB4C4;
-    --color-bg: #f4f4f4;
-    --color-action: #7A7364;
-    --color-action-hover: #5e584d;
+  --color-primary: steelblue;
+  --color-support: #8FB4C4;
+  --color-bg: #f9fafb;
+  --color-action: #7A7364;
+  --color-action-hover: #5e584d;
+}
+
+main {
+  display: flex;
+  height: calc(100vh - 65px);
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: 'Poppins' !important;
+  font-weight: 500 !important;
+}
+
+mat-card {
+  margin-bottom: 10px;
+}
+
+mat-card, mat-card-title, mat-card-content, mat-card-subtitle {
+  padding: 10px;
+}
+
+.listagem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 50px;
+}
+
+.left {
+  width: 60%;
+  overflow-y: auto;
+  background-color: var(--color-bg);
+}
+
+.form-container {
+  padding: 40px 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.form-container button {
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.right {
+  width: 40%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: sticky;
+  top: 0;
+}
+
+@media (max-width: 900px) {
+  .right {
+      display: none;
+  }
+
+  .left {
+      width: 100%;
+  }
 }
