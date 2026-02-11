@@ -19,12 +19,12 @@ Para executar este projeto localmente, você precisará do Node.js e do Angular 
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/clinica-veterinaria.git
+   git clone https://github.com/RubenFontes/clinpet.git
    ```
 
 2. Entre no diretório do projeto:
    ```bash
-   cd clinica-veterinaria
+   cd clinpet
    ```
 
 3. Instale as dependências:
