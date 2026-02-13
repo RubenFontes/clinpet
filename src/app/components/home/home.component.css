@@ -12,3 +12,9 @@ body {
     height: calc(100vh - 65px);
     margin: 0;
 }
+
+@media (max-width: 900px) {
+    body {
+        background-image: url('../../../assets/imgs/bg-home-mobile.jpg');
+    }
+}
