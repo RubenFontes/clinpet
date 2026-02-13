@@ -47,8 +47,9 @@ export class TutoresComponent implements OnInit {
       this.tutorService.createTutor(this.formTutor.value);
       this.snackBar.open('Tutor criado com sucesso!', 'Fechar')
       this.formTutor.reset();
-      this.listaTutores();
     }
+    this.listaTutores();
+    this.buscaTutores('');
   }
 
   listaTutores() {
