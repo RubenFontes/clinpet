@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IAtendimento } from '../models/Atendimento';
+import { StorageService } from '../core/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +9,15 @@ export class AtendimentoService {
 
   private storageKey = 'atendimentos';
 
-  constructor() { }
+  constructor(private storage: StorageService) { }
 
+  // Helpers
   getAtendimentos(): IAtendimento[] {
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+    return this.storage.get(this.storageKey);
   }
 
   saveAtendimentos(atendimentos: IAtendimento[]): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(atendimentos));
+    this.storage.save<IAtendimento>(this.storageKey, atendimentos);
   }
 
   getAtendimentoByAgendamento(idAgendamento: string): IAtendimento | undefined {
@@ -23,6 +25,7 @@ export class AtendimentoService {
     return atendimentos.find(a => a.idAgendamento === idAgendamento);
   }
 
+  // CRUD
   createAtendimento(atendimento: IAtendimento): void {
     const atendimentos = this.getAtendimentos();
     atendimento.id = crypto.randomUUID();

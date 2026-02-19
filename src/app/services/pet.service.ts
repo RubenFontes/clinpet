@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPet } from '../models/Pet';
+import { StorageService } from '../core/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,12 +8,25 @@ import { IPet } from '../models/Pet';
 
 export class PetService {
 
-  private storageKey = 'pets';
+  private dataPets: string = 'pets';
 
-  constructor() { }
+  constructor(private storage: StorageService) { }
 
+  // Helpers
   getPets(): IPet[] {
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+    return this.storage.get(this.dataPets);
+  }
+
+  savePets(pets: IPet[]): void {
+    this.storage.save<IPet>(this.dataPets, pets);
+  }
+
+  // CRUD
+  createPet(pet: IPet): void {
+    const pets = this.getPets();
+    pet.id = crypto.randomUUID();
+    pets.push(pet);
+    this.savePets(pets);
   }
 
   readPets(nome?: string | null): IPet[] {
@@ -22,17 +36,6 @@ export class PetService {
     } else {
       return pets.filter(pet => pet.nome === nome);
     }
-  }
-
-  savePets(pets: IPet[]): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(pets));
-  }
-
-  createPet(pet: IPet): void {
-    const pets = this.getPets();
-    pet.id = crypto.randomUUID();
-    pets.push(pet);
-    this.savePets(pets);
   }
 
   updatePet(pet: IPet): void {

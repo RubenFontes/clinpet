@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
 import { ITutor } from '../models/Tutor';
+import { StorageService } from '../core/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TutorService {
 
-  private dataTutors: string = 'tutors';  
+  private dataTutors: string = 'tutors';
 
-  constructor() { }
+  constructor(private storage: StorageService) { }
 
   // Helpers
-  getTutors(): ITutor[] { 
-    return JSON.parse(localStorage.getItem(this.dataTutors) || '[]');
+  getTutors(): ITutor[] {
+    return this.storage.get(this.dataTutors);
   }
-  
+
   saveTutor(tutors: ITutor[]): void {
-    localStorage.setItem(this.dataTutors, JSON.stringify(tutors));
+    this.storage.save(this.dataTutors, tutors);
   }
 
   // CRUD
   createTutor(tutor: ITutor) {
     const tutors: ITutor[] = this.getTutors();
 
-    tutor.id = crypto.randomUUID(); // gera ID
+    tutor.id = crypto.randomUUID();
     
     tutors.push(tutor);
     this.saveTutor(tutors);

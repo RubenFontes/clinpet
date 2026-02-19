@@ -12,6 +12,7 @@
                         {{ tutor.nome }} (CPF: {{ tutor.cpf }})
                     </mat-option>
                 </mat-select>
+                 <mat-error *ngIf="formPet.get('tutorId')?.invalid">Escolha/cadastre um tutor para prosseguir</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
@@ -48,16 +49,14 @@
                 <textarea title="''" matInput formControlName="obs" rows="3"></textarea>
             </mat-form-field>
 
-            <button mat-flat-button color="primary" type="submit" [disabled]="!formPet.valid">{{ petEmEdicao ? 'Salvar Alterações' : 'Cadastrar Pet' }}</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="!formPet.valid">{{ petEmEdicao ? 'Salvar Alterações' : 'Cadastrar Pet' | uppercase }}</button>
             <button mat-stroked-button type="button" *ngIf="petEmEdicao" (click)="cancelarEdicao()">Cancelar</button>
         </form>
 
         <!-- Lista de Pets -->
         <section class="listagem" *ngIf="mostrarListagem && pets.length > 0">
             <h2>Pets Cadastrados</h2>
-
-            <app-search placeholder="Buscar por nome" (onSearch)="buscarPets($event)"></app-search>
-
+            <app-search (onSearch)="buscarPets($event)"></app-search>
             <mat-card class="pet-card" *ngFor="let pet of petsFiltrados">
                 <mat-card-title>{{ pet.nome }} ({{ pet.especie }})</mat-card-title>
                 <mat-card-subtitle>Tutor: {{ getNomeTutor(pet.tutorId) }}</mat-card-subtitle>

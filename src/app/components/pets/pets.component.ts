@@ -22,7 +22,6 @@ export class PetsComponent implements OnInit {
   tutores: ITutor[] = [];
   petEmEdicao: IPet | null = null;
   mostrarListagem = true;
-  query: string = '';
 
   formPet: FormGroup = new FormGroup({
     nome: new FormControl('', Validators.required),
@@ -46,22 +45,39 @@ export class PetsComponent implements OnInit {
     this.petsFiltrados = this.pets;
   }
 
+  // CRUD
   salvarPet() {
     if (this.formPet.invalid) return;
 
-    const petForm = this.formPet.value;
-
     if (this.petEmEdicao) {
-      const petAtualizado: IPet = { ...petForm, id: this.petEmEdicao.id };
+      const petAtualizado: IPet = { ...this.formPet.value, id: this.petEmEdicao.id };
       this.petService.updatePet(petAtualizado);
       this.snackBar.open('Pet atualizado com sucesso!', 'Fechar', { duration: 3000 });
       this.cancelarEdicao();
     } else {
-      this.petService.createPet(petForm);
+      this.petService.createPet(this.formPet.value);
       this.snackBar.open('Pet cadastrado com sucesso!', 'Fechar', { duration: 3000 });
       this.formPet.reset();
     }
     this.carregarDados();
+  }
+
+    buscarPets(pet: string) {
+    this.petsFiltrados = this.petService.readPets(pet);
+  }
+
+    deletarPet(id: string) {
+    this.petService.deletePet(id);
+    this.carregarDados();
+    this.snackBar.open('Pet excluído!', 'Fechar', { duration: 3000 });
+  }
+
+  // UTILS
+  getNomeTutor(tutorId: string): string | void {
+    const tutor = this.tutores.find(t => t.id === tutorId);
+    if(tutor) {
+      return tutor.nome
+    }
   }
 
   prepararEdicao(pet: IPet) {
@@ -74,28 +90,5 @@ export class PetsComponent implements OnInit {
     this.petEmEdicao = null;
     this.formPet.reset();
     this.mostrarListagem = true;
-  }
-
-  deletarPet(id: string) {
-    this.petService.deletePet(id);
-    this.carregarDados();
-    
-    if (this.query) {
-      this.buscarPets(this.query);
-    }
-    this.snackBar.open('Pet excluído!', 'Fechar', { duration: 3000 });
-  }
-  
-
-  getNomeTutor(tutorId: string): string | void {
-    const tutor = this.tutores.find(t => t.id === tutorId);
-    if(tutor) {
-      return tutor.nome
-    }
-  }
-
-  buscarPets(query: string) {
-    this.query = query;
-    this.petsFiltrados = this.petService.readPets(this.query);
   }
 }

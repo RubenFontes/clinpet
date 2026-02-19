@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IAgendamento } from '../models/Agendamento';
+import { StorageService } from '../core/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +9,23 @@ export class AgendamentoService {
 
   private storageKey = 'agendamentos';
 
-  constructor() { }
+  constructor(private storage: StorageService) { }
 
+  // Helpers
   getAgendamentos(): IAgendamento[] {
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+    return this.storage.get(this.storageKey);
   }
 
   saveAgendamentos(agendamentos: IAgendamento[]): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(agendamentos));
+    this.storage.save<IAgendamento>(this.storageKey, agendamentos);
+  }
+
+  // CRUD
+  createAgendamento(agendamento: IAgendamento): void {
+    const agendamentos = this.getAgendamentos();
+    agendamento.id = crypto.randomUUID();
+    agendamentos.push(agendamento);
+    this.saveAgendamentos(agendamentos);
   }
 
   readAgendamentos(tipo?: string | null): IAgendamento[] {
@@ -25,13 +35,6 @@ export class AgendamentoService {
     } else {
       return agendamentos.filter(agendamentos => agendamentos.tipo === tipo);
     }
-  }
-
-  createAgendamento(agendamento: IAgendamento): void {
-    const agendamentos = this.getAgendamentos();
-    agendamento.id = crypto.randomUUID();
-    agendamentos.push(agendamento);
-    this.saveAgendamentos(agendamentos);
   }
 
   updateAgendamento(agendamento: IAgendamento): void {

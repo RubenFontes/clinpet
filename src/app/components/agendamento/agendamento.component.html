@@ -48,16 +48,15 @@
                 <textarea title="''" matInput formControlName="obs" rows="3"></textarea>
             </mat-form-field>
 
-            <button mat-flat-button color="primary" type="submit" [disabled]="!formAgendamento.valid">{{ agendamentoEmEdicao ? 'Salvar Alterações' : 'Agendar' }}</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="!formAgendamento.valid">{{ agendamentoEmEdicao ? 'Salvar Alterações' : 'Agendar' | uppercase}}</button>
             <button mat-stroked-button type="button" *ngIf="agendamentoEmEdicao" (click)="cancelarEdicao()">Cancelar</button>
         </form>
 
         <section class="listagem" *ngIf="mostrarListagem && agendamentos.length > 0">
             <h2>Agendamentos Marcados</h2>
-                        <app-search placeholder="Buscar por Pet ou Tutor" (onSearch)="buscarAgendamentos($event)"></app-search>
-
+            <app-search (onSearch)="buscarAgendamentos($event)"></app-search>
             <mat-card class="agendamento-card" *ngFor="let item of agendamentosFiltrados">
-                <mat-card-title>{{ item.tipo }} - às {{ item.hora }}</mat-card-title>
+                <mat-card-title>{{ item.tipo | uppercase }} - às {{ item.hora }}</mat-card-title>
                 <mat-card-subtitle>
                     Pet: {{ getNomePet(item.petId) }} <br>
                     Tutor: {{ getInfoTutor(item.petId) }}

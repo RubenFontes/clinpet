@@ -1,7 +1,7 @@
 <section class="content-container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>{{ atendimentoEmEdicao ? 'Editar Atendimento' : 'Novo Atendimento' }}</mat-card-title>
+            <mat-card-title>{{ (atendimentoEmEdicao ? 'Editar Atendimento' : 'Novo Atendimento') | uppercase }}</mat-card-title>
             <mat-card-subtitle *ngIf="idAgendamento">
                 Agendamento: {{ idAgendamento }}
             </mat-card-subtitle>

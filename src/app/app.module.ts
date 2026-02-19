@@ -15,23 +15,10 @@ import { TutoresComponent } from './components/tutores/tutores.component';
 import { SearchComponent } from './components/search/search.component';
 
 // Material
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule, MatFabAnchor } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatCardModule } from '@angular/material/card';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
-
+import { MaterialModule } from './shared/material.module';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 
 // Mask
 import { NgxMaskModule } from 'ngx-mask';
@@ -51,23 +38,12 @@ import { NgxMaskModule } from 'ngx-mask';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatMenuModule,
-    MatCardModule,
+    MaterialModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSnackBarModule,
-    NgxMaskModule.forRoot(),
-    MatOptionModule,
-    MatSelectModule,
-    MatSidenavModule
+    NgxMaskModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

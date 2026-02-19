@@ -36,15 +36,7 @@ export class AtendimentoComponent implements OnInit {
     }
   }
 
-  carregarAtendimento() {
-    if (!this.idAgendamento) return;
-    const atendimento = this.atendimentoService.getAtendimentoByAgendamento(this.idAgendamento);
-    if (atendimento) {
-      this.atendimentoEmEdicao = atendimento;
-      this.formAtendimento.patchValue(atendimento);
-    }
-  }
-
+  // CRUD
   salvarAtendimento() {
     if (this.formAtendimento.invalid) return;
     if (!this.idAgendamento) {
@@ -52,17 +44,24 @@ export class AtendimentoComponent implements OnInit {
       return;
     }
 
-    const dadosForm = this.formAtendimento.value;
-
     if (this.atendimentoEmEdicao) {
-      const atendimentoAtualizado: IAtendimento = { ...this.atendimentoEmEdicao, ...dadosForm };
+      const atendimentoAtualizado: IAtendimento = { ...this.atendimentoEmEdicao, ...this.formAtendimento.value };
       this.atendimentoService.updateAtendimento(atendimentoAtualizado);
       this.snackBar.open('Atendimento atualizado com sucesso!', 'Fechar', { duration: 3000 });
     } else {
-      const novoAtendimento: IAtendimento = { ...dadosForm, idAgendamento: this.idAgendamento };
+      const novoAtendimento: IAtendimento = { ...this.formAtendimento.value, idAgendamento: this.idAgendamento };
       this.atendimentoService.createAtendimento(novoAtendimento);
       this.snackBar.open('Atendimento registrado com sucesso!', 'Fechar', { duration: 3000 });
       this.carregarAtendimento();
+    }
+  }
+
+  carregarAtendimento() {
+    if (!this.idAgendamento) return;
+    const atendimento = this.atendimentoService.getAtendimentoByAgendamento(this.idAgendamento);
+    if (atendimento) {
+      this.atendimentoEmEdicao = atendimento;
+      this.formAtendimento.patchValue(atendimento);
     }
   }
 

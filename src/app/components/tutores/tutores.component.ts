@@ -4,7 +4,6 @@ import { OnInit } from '@angular/core';
 import { TutorService } from '../../services/tutor.service';
 import { ITutor } from 'src/app/models/Tutor';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-tutores',
@@ -23,7 +22,6 @@ export class TutoresComponent implements OnInit {
   tutoresFiltrados: ITutor[] = [];
   mostrarListagem = true;
   tutorEmEdicao: ITutor | null = null;
-  query: string = '';
 
   constructor (private tutorService: TutorService, private snackBar: MatSnackBar){}
 
@@ -37,6 +35,8 @@ export class TutoresComponent implements OnInit {
 
   // CRUD
   salvaTutor() {
+    if (this.formTutor.invalid) return;
+
     if (this.tutorEmEdicao) {
       const tutorAtualizado = { ...this.formTutor.value, id: this.tutorEmEdicao.id };
       this.tutorService.updateTutor(tutorAtualizado);
@@ -57,16 +57,14 @@ export class TutoresComponent implements OnInit {
   }
 
   deletarTutor(id?: string) {
-      id && this.tutorService.deleteTutor(id);
-      this.tutores = this.tutorService.getTutors();
-
-      this.tutoresFiltrados = this.query ? this.tutorService.readTutor(this.query) : this.tutores;
+    id && this.tutorService.deleteTutor(id);
+    this.tutores = this.tutorService.getTutors();
+    this.tutoresFiltrados = this.tutores;
   }
 
   // UTILS
-  buscaTutores(query: string) {
-    this.query = query;
-    this.tutoresFiltrados = this.tutorService.readTutor(this.query);
+  buscaTutores(tutor: string) {
+    this.tutoresFiltrados = this.tutorService.readTutor(tutor);
   }
 
   prepararEdicao(tutor: ITutor) {

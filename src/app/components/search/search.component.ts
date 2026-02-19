@@ -6,11 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
-  @Input() placeholder: string = 'Buscar...';
   @Output() onSearch = new EventEmitter<string>();
 
-  search(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
+  search(value: string) {
     this.onSearch.emit(value);
   }
 }

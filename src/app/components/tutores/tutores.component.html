@@ -34,14 +34,14 @@
                 <input placeholder="CPF" matInput formControlName="cpf" mask="000.000.000-00">
             </mat-form-field>
 
-            <button mat-flat-button color="primary" type="submit" [disabled]="!formTutor.valid">{{ tutorEmEdicao ? 'Atualizar Tutor' : 'Cadastrar Tutor' }}</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="!formTutor.valid">{{ tutorEmEdicao ? 'Atualizar Tutor' : 'Cadastrar Tutor' | uppercase}}</button>
             <button mat-stroked-button type="button" *ngIf="tutorEmEdicao" (click)="cancelarEdicao()">Cancelar</button>
         </form>
 
         <!-- Lista de tutores -->
         <section class="listagem" *ngIf="mostrarListagem && tutores.length > 0">
             <h2>Tutores Cadastrados</h2>
-            <app-search placeholder="Buscar por nome" (onSearch)="buscaTutores($event)"></app-search>
+            <app-search (onSearch)="buscaTutores($event)"></app-search>
             <section class="cards" *ngIf="tutoresFiltrados.length > 0">
                 <mat-card class="tutor-card" *ngFor="let tutor of tutoresFiltrados">
                 

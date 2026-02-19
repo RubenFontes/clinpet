@@ -22,7 +22,6 @@ export class AgendamentoComponent implements OnInit {
   tutores: ITutor[] = [];
   agendamentoEmEdicao: IAgendamento | null = null;
   mostrarListagem = true;
-  query: string = '';
 
   formAgendamento: FormGroup = new FormGroup({
     petId: new FormControl('', Validators.required),
@@ -49,27 +48,37 @@ export class AgendamentoComponent implements OnInit {
     this.pets = this.petService.getPets();
     this.tutores = this.tutorService.getTutors();
     
-    this.buscarAgendamentos(this.query);
+    this.buscarAgendamentos('');
   }
 
+  // CRUD
   salvarAgendamento() {
     if (this.formAgendamento.invalid) return;
 
-    const agendamentoForm = this.formAgendamento.value;
-
     if (this.agendamentoEmEdicao) {
-      const agendamentoAtualizado: IAgendamento = { ...agendamentoForm, id: this.agendamentoEmEdicao.id };
+      const agendamentoAtualizado: IAgendamento = { ...this.formAgendamento.value, id: this.agendamentoEmEdicao.id };
       this.agendamentoService.updateAgendamento(agendamentoAtualizado);
       this.snackBar.open('Agendamento atualizado com sucesso!', 'Fechar', { duration: 3000 });
       this.cancelarEdicao();
     } else {
-      this.agendamentoService.createAgendamento(agendamentoForm);
+      this.agendamentoService.createAgendamento(this.formAgendamento.value);
       this.snackBar.open('Agendamento criado com sucesso!', 'Fechar', { duration: 3000 });
       this.formAgendamento.reset();
     }
     this.carregarDados();
   }
 
+  buscarAgendamentos(agendamento: string) {    
+    this.agendamentosFiltrados = this.agendamentoService.readAgendamentos(agendamento);
+  }
+
+  deletarAgendamento(id: string) {
+    this.agendamentoService.deleteAgendamento(id);
+    this.carregarDados();
+    this.snackBar.open('Agendamento cancelado!', 'Fechar', { duration: 3000 });
+  }
+
+  // UTILS
   prepararEdicao(agendamento: IAgendamento) {
     this.agendamentoEmEdicao = agendamento;
     this.formAgendamento.patchValue(agendamento);
@@ -80,14 +89,7 @@ export class AgendamentoComponent implements OnInit {
     this.agendamentoEmEdicao = null;
     this.formAgendamento.reset();
     this.mostrarListagem = true;
-  }
-
-  deletarAgendamento(id: string) {
-    this.agendamentoService.deleteAgendamento(id);
-    this.carregarDados();
-    this.snackBar.open('Agendamento cancelado!', 'Fechar', { duration: 3000 });
-  }
-  
+  }  
 
   getNomePet(petId: string): string {
     const pet = this.pets.find(p => p.id === petId);
@@ -102,9 +104,4 @@ export class AgendamentoComponent implements OnInit {
     }
     return '';
   }    
-
-  buscarAgendamentos(query: string) {    
-    this.query = query;
-    this.agendamentosFiltrados = this.agendamentoService.readAgendamentos(this.query);
-  }
 }
