@@ -9,8 +9,8 @@
     </mat-card-title>
 
     <mat-card-subtitle>
-      Pet: {{ item.petNome }}<br>
-      Tutor: {{ item.tutorNome }}
+      Pet: {{ getNomePet(item.petId) }}<br>
+      Tutor: {{ getNomeTutor(item.petId) }}
     </mat-card-subtitle>
 
     <mat-card-actions>
