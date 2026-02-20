@@ -1,0 +1,34 @@
+<section class="listagem" *ngIf="mostrarListagem && hasPets">
+  <h2>Pets Cadastrados</h2>
+
+  <app-search (onSearch)="buscar.emit($event)"></app-search>
+
+  <mat-card class="pet-card" *ngFor="let pet of petsFiltrados">
+    <mat-card-title>
+      {{ pet.nome }} ({{ pet.especie }})
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      Tutor: {{ pet.tutorNome || '' }}
+    </mat-card-subtitle>
+
+    <mat-card-actions align="end">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="editar.emit(pet)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="deletar.emit(pet.id!)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
+

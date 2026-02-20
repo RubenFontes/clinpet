@@ -1,0 +1,14 @@
+.listagem {
+  margin-top: 24px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tutor-card {
+  width: 100%;
+}
+

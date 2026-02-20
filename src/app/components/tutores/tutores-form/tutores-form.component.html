@@ -1,0 +1,56 @@
+<form [formGroup]="formTutor" class="form-container" (ngSubmit)="salvar.emit()">
+  <h1>Cadastro de Tutor</h1>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome" placeholder="Nome" minlength="3">
+    <mat-error *ngIf="formTutor.get('nome')?.invalid">
+      Insira um nome válido (mínimo 3 caracteres)
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Telefone</mat-label>
+    <input placeholder="Telefone" matInput formControlName="telefone" mask="(00) 00000-0000">
+    <mat-error *ngIf="formTutor.get('telefone')?.invalid">
+      Telefone inválido
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input placeholder="Email" matInput type="email" formControlName="email">
+    <mat-error *ngIf="formTutor.get('email')?.hasError('email')">
+      Email inválido
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Endereço</mat-label>
+    <input placeholder="Endereço" matInput formControlName="endereco">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>CPF</mat-label>
+    <input placeholder="CPF" matInput formControlName="cpf" mask="000.000.000-00">
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    [disabled]="!formTutor.valid"
+  >
+    {{ tutorEmEdicao ? 'Atualizar Tutor' : ('Cadastrar Tutor' | uppercase) }}
+  </button>
+
+  <button
+    mat-stroked-button
+    type="button"
+    *ngIf="tutorEmEdicao"
+    (click)="cancelar.emit()"
+  >
+    Cancelar
+  </button>
+</form>
+

@@ -1,0 +1,48 @@
+<section class="listagem" *ngIf="mostrarListagem && agendamentos.length > 0">
+  <h2>Agendamentos Marcados</h2>
+
+  <app-search (onSearch)="buscar.emit($event)"></app-search>
+
+  <mat-card class="agendamento-card" *ngFor="let item of agendamentosFiltrados">
+    <mat-card-title>
+      {{ item.tipo | uppercase }} - às {{ item.hora }}
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      Pet: {{ item.petNome }}<br>
+      Tutor: {{ item.tutorNome }}
+    </mat-card-subtitle>
+
+    <mat-card-actions>
+      <section class="start">
+        <button
+          mat-flat-button
+          color="primary"
+          [routerLink]="['/atendimento', item.id]"
+        >
+          <mat-icon>assignment_turned_in</mat-icon>
+          Atendimento
+        </button>
+      </section>
+
+      <section class="end">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="editar.emit(item)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deletar.emit(item.id!)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </section>
+    </mat-card-actions>
+  </mat-card>
+</section>
+

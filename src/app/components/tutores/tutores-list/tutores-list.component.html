@@ -1,0 +1,37 @@
+<section class="listagem" *ngIf="mostrarListagem && tutores.length > 0">
+  <h2>Tutores Cadastrados</h2>
+
+  <app-search (onSearch)="buscar.emit($event)"></app-search>
+
+  <section class="cards" *ngIf="tutoresFiltrados.length > 0">
+    <mat-card class="tutor-card" *ngFor="let tutor of tutoresFiltrados">
+      <mat-card-title>{{ tutor.nome }}</mat-card-title>
+
+      <mat-card-content>
+        <p><strong>Telefone:</strong> {{ tutor.telefone }}</p>
+        <p><strong>Email:</strong> {{ tutor.email }}</p>
+        <p><strong>Endereço:</strong> {{ tutor.endereco }}</p>
+        <p><strong>CPF:</strong> {{ tutor.cpf }}</p>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="editar.emit(tutor)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deletar.emit(tutor.id!)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</section>
+

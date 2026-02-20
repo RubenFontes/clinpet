@@ -1,71 +1,22 @@
 <main>
-    <section class="left">
-        <!-- Formulário de cadastro de pet -->
-        <form [formGroup]="formPet" class="form-container" (ngSubmit)="salvarPet()">
-            
-            <h1>{{ petEmEdicao ? 'Editar Pet' : 'Cadastro de Pet' }}</h1>
+  <section class="left">
+    <app-pets-form
+      [formPet]="formPet"
+      [petEmEdicao]="petEmEdicao"
+      [tutores]="tutores"
+      (salvar)="salvarPet()"
+      (cancelar)="cancelarEdicao()"
+    ></app-pets-form>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Tutor Responsável</mat-label>
-                <mat-select formControlName="tutorId">
-                    <mat-option *ngFor="let tutor of tutores" [value]="tutor.id">
-                        {{ tutor.nome }} (CPF: {{ tutor.cpf }})
-                    </mat-option>
-                </mat-select>
-                 <mat-error *ngIf="formPet.get('tutorId')?.invalid">Escolha/cadastre um tutor para prosseguir</mat-error>
-            </mat-form-field>
+    <app-pets-list
+      [mostrarListagem]="mostrarListagem"
+      [pets]="pets"
+      [petsFiltrados]="petsFiltrados"
+      (buscar)="buscarPets($event)"
+      (editar)="prepararEdicao($event)"
+      (deletar)="deletarPet($event)"
+    ></app-pets-list>
+  </section>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Nome</mat-label>
-                <input matInput formControlName="nome" placeholder="Nome">
-                <mat-error *ngIf="formPet.get('nome')?.invalid">Nome é obrigatório</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Especie</mat-label>
-                <input placeholder="Ex: Cachorro, Gato" matInput formControlName="especie">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Raça</mat-label>
-                <input placeholder="Ex: Vira-lata" matInput formControlName="raca">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Sexo</mat-label>
-                <mat-select formControlName="sexo">
-                    <mat-option value="M">Macho</mat-option>
-                    <mat-option value="F">Fêmea</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Data de Nascimento</mat-label>
-                <input placeholder="DD/MM/AAAA" matInput formControlName="dataNascimento" mask="d0/M0/0000">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Observações</mat-label>
-                <textarea title="''" matInput formControlName="obs" rows="3"></textarea>
-            </mat-form-field>
-
-            <button mat-flat-button color="primary" type="submit" [disabled]="!formPet.valid">{{ petEmEdicao ? 'Salvar Alterações' : 'Cadastrar Pet' | uppercase }}</button>
-            <button mat-stroked-button type="button" *ngIf="petEmEdicao" (click)="cancelarEdicao()">Cancelar</button>
-        </form>
-
-        <!-- Lista de Pets -->
-        <section class="listagem" *ngIf="mostrarListagem && pets.length > 0">
-            <h2>Pets Cadastrados</h2>
-            <app-search (onSearch)="buscarPets($event)"></app-search>
-            <mat-card class="pet-card" *ngFor="let pet of petsFiltrados">
-                <mat-card-title>{{ pet.nome }} ({{ pet.especie }})</mat-card-title>
-                <mat-card-subtitle>Tutor: {{ getNomeTutor(pet.tutorId) }}</mat-card-subtitle>
-                <mat-card-actions align="end">
-                    <button mat-icon-button color="primary" (click)="prepararEdicao(pet)"><mat-icon>edit</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="deletarPet(pet.id)"><mat-icon>delete</mat-icon></button>
-                </mat-card-actions>
-            </mat-card>
-        </section>
-    </section>
-    <section class="right"></section>
+  <section class="right"></section>
 </main>
